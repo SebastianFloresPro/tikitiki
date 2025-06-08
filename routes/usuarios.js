@@ -126,19 +126,13 @@ router.post('/login', async (req, res) => {
 
 // Cerrar sesión
 router.post('/logout', (req, res) => {
-  req.session.destroy(err => {
-    if (err) {
-      console.error('Error al cerrar sesión:', err);
-      return res.status(500).json({ success: false, message: 'Error al cerrar sesión' });
-    }
-    res.clearCookie('connect.sid', {
-      path: '/',
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    req.session.destroy((err) => {
+        if (err) {
+            return res.json({ success: false, message: 'Error al cerrar sesión' });
+        }
+        res.clearCookie('connect.sid');
+        res.json({ success: true, message: 'Sesión cerrada exitosamente' });
     });
-    res.json({ success: true, message: 'Sesión cerrada exitosamente' });
-  });
 });
 
 // Verificar estado de autenticación

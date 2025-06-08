@@ -6,10 +6,9 @@ const { Sequelize } = require('sequelize');
 const dbConnection = mysql.createConnection({
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '1234',
+    password: process.env.DB_PASSWORD || 'aliceg',
     database: process.env.DB_DATABASE || 'dbtikapaw',
-    //port: process.env.DB_PORT || 3306 // local
-    port: process.env.DB_PORT || 32803 // render
+    port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 3306,
 });
 
 dbConnection.connect((err) => {
@@ -29,13 +28,12 @@ const db = {
 const sequelize = new Sequelize(
     process.env.DB_DATABASE || 'dbtikapaw',
     process.env.DB_USER || 'root',
-    process.env.DB_PASSWORD || '1234',
+    process.env.DB_PASSWORD || 'aliceg',
     {
         host: process.env.DB_HOST || 'localhost',
-        //port: process.env.DB_PORT || 3306, // local
-        port: process.env.DB_PORT || 32803, //render
+        port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 3306,
         dialect: 'mysql',
-        logging: false
+        logging: false,
     }
 );
 

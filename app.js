@@ -42,13 +42,22 @@ app.listen(port, () => {
 });
 */
 // app.js
+require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
-const db = require('./config/database');
+const { db, sequelize } = require('./config/database');
+
+const sessionStore = new SequelizeStore({
+    db: sequelize,  // <-- Usar directamente esta instancia
+    tableName: 'sessions',
+    checkExpirationInterval: 15 * 60 * 1000,
+    expiration: 7 * 24 * 60 * 60 * 1000
+});
+
 
 // Importar rutas
 const indexRoutes = require('./routes/index');
@@ -87,13 +96,6 @@ const cookieSettings = {
     maxAge: 7 * 24 * 60 * 60 * 1000 // 7 días
 };
 
-// Configuración de sesión persistente
-const sessionStore = new SequelizeStore({
-    db: db.sequelize,
-    tableName: 'sessions',
-    checkExpirationInterval: 15 * 60 * 1000,
-    expiration: 7 * 24 * 60 * 60 * 1000
-});
 
 app.use(session({
     secret: process.env.SESSION_SECRET || '91119adbb9f0f692a5838d138883bd53',
@@ -128,3 +130,4 @@ app.use('/solicitudes', solicitudesRoutes);
 app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);
 });
+
