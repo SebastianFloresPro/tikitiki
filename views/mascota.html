@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikaPaw - Detalles de la Mascota</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<header>
+  <div class="logo">
+    <a href="/" style="text-decoration: none; display: flex; align-items: center; gap: 10px; color: #333;">
+      <img src="/img/Cats Grooming.png" alt="Logo">
+      <strong>TikaPaw</strong>
+    </a>
+  </div>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/refugios.html">Refugios</a>
+    <a href="/about.html">About</a>
+    <a href="/contact.html">Contact</a>
+  </nav>
+    <div class="iconos">
+            <a href="/usuarios/login" title="Iniciar sesión">
+                <i class="fa-regular fa-user"></i>
+            </a>
+
+            <div style="position: relative; display: inline-block;">
+                <a href="#" id="toggle" title="Opciones" style="font-size: 20px; color: black; cursor: pointer;">
+                    <i class="fa-solid fa-file-arrow-down"></i>
+                </a>
+                <!--
+              <div id="menu" style="display: none; position: absolute; background: white; border: 1px solid black; z-index: 10; right: 0; top: 30px;">
+                <div>
+                    <a id="rdf-viewer-link" href="/mascotas/mascotas-rdf?view=html&idmascota=<%= idmascota %>">Ver RDF de Mascota</a> |
+                    <a id="rdf-download-link" href="/mascotas/mascotas-rdf?idmascota=<%= idmascota %>">Descargar RDF</a>
+                </div>
+                <a id="graph-link" href="/grafo?idmascota=<%= idmascota %>" style="display: block; padding: 8px 12px; color: black; text-decoration: none;">Ver grafo</a>
+            </div>
+            -->
+            </div>
+        </div>
+</header>
+
+<main>
+  <section class="seccion-mascota">
+    <h2><i class="fa-solid fa-paw"></i> Detalles de la Mascota</h2>
+    <div class="mascota-contenido">
+      <img id="foto" src="/img/cat.jpeg" alt="Mascota" class="mascota-imagen">
+      <div class="mascota-detalles">
+        <h2 id="nombre">Cargando...</h2>
+        <p><strong>Refugio:</strong> <span id="idcentro">Cargando...</span></p>
+        <p><strong>Edad:</strong> <span id="edad">Cargando...</span></p>
+        <p><strong>Especie:</strong> <span id="especie">Cargando...</span></p>
+        <p><strong>Género:</strong> <span id="genero">Cargando...</span></p>
+        <p><strong>Tamaño:</strong> <span id="tamanio">Cargando...</span></p>
+        <p><strong>Descripción:</strong> <span id="descripcion">Cargando...</span></p>
+        
+        <form id="solicitud-adopcion-form">
+          <input type="hidden" id="idmascota" name="mascotaId">
+          <button type="submit" class="boton-adoptar">Solicitar Adopción</button>
+          <a href="/" class="boton-volver">Volver al inicio</a>
+          <p id="mensaje-exito" class="mensaje-exito">¡Solicitud enviada con éxito!</p>
+          <p id="mensaje-error" class="mensaje-error"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © 2025 TikaPaw - Todos los derechos reservados
+</footer>
+
+<script src="/js/mascota.js"></script>
+
+  <script src="/js/BotonToggle.js"></script>
+</body>
+</html>

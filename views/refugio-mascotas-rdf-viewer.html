@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikaPaw - Visualizador RDF de Mascota</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rdflib/2.2.33/rdflib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/vis-network.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/vis-network.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo-marca">
+            <a href="/" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+                <img src="/img/Cats Grooming.png" alt="Logo">
+                TikaPaw
+            </a>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/refugios">Refugios</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+        </nav>
+        <div class="iconos">
+            <a href="/usuarios/login" title="Iniciar sesión">
+                <i class="fa-regular fa-user"></i>
+            </a>
+            <a href="/busqueda" title="Buscar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </a>
+            <div style="position: relative; display: inline-block;">
+                <a href="#" id="toggle" title="Opciones" style="font-size: 20px; color: black; cursor: pointer;">
+                    <i class="fa-solid fa-file-arrow-down"></i>
+                </a>
+                <div id="menu" style="display: none; position: absolute; background: white; border: 1px solid black; z-index: 10; right: 0; top: 30px;">
+                    <div>
+                        <a id="rdf-viewer-link" href="/mascotas/mascotas-rdf?view=html<%= idmascota ? `&idmascota=${idmascota}` : idcentro ? `&idcentro=${idcentro}` : '' %>">Ver RDF</a> |
+                        <a id="rdf-download-link" href="/mascotas/mascotas-rdf<%= idmascota ? `?idmascota=${idmascota}` : idcentro ? `?idcentro=${idcentro}` : '' %>">Descargar RDF</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <h1>Visualizador RDF de <%= idmascota ? 'Mascota' : 'Mascotas del Refugio' %></h1>
+        <p>Visualización automática del RDF generado:</p>
+        <div id="mynetwork" style="height: 600px; border: 1px solid #ccc; position: relative;"></div>
+    </main>
+    <footer>
+        <p>© 2025 TikaPaw - Todos los derechos reservados</p>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const idmascota = urlParams.get('idmascota');
+            const idcentro = urlParams.get('idcentro');
+            const container = document.getElementById('mynetwork');
+
+            const fetchUrl = idmascota ? `/mascotas-rdf?idmascota=${idmascota}` : idcentro ? `/mascotas-rdf?idcentro=${idcentro}` : '/mascotas-rdf';
+
+            fetch(fetchUrl)
+                .then(res => {
+                    if (!res.ok) throw new Error(`Error al cargar RDF: ${res.statusText}`);
+                    return res.text();
+                })
+                .then(rdfText => {
+                    console.log('RDF recibido:', rdfText);
+                    try {
+                        const store = $rdf.graph();
+                        const baseURI = window.location.href;
+                        const contentType = 'application/rdf+xml';
+                        $rdf.parse(rdfText, store, baseURI, contentType);
+
+                        const nodes = new vis.DataSet();
+                        const edges = new vis.DataSet();
+                        let idCount = 0;
+                        const nodeMap = new Map();
+
+                        function addNode(uri) {
+                            if (!nodeMap.has(uri)) {
+                                let label = uri;
+                                try {
+                                    if (uri.startsWith('http')) {
+                                        label = decodeURIComponent(uri.split(/[\/#]/).pop());
+                                    }
+                                } catch {}
+                                nodes.add({ id: idCount, label: label, shape: uri.includes('/mascota/') ? 'box' : 'ellipse', color: uri.includes('/mascota/') ? '#ffcc00' : '#00ccff' });
+                                nodeMap.set(uri, idCount);
+                                idCount++;
+                            }
+                            return nodeMap.get(uri);
+                        }
+
+                        store.statements.forEach(triple => {
+                            const s = triple.subject.value;
+                            const p = triple.predicate.value;
+                            const o = triple.object.value;
+
+                            const sId = addNode(s);
+                            const oId = addNode(o);
+                            const predLabel = p.split(/[\/#]/).pop();
+
+                            edges.add({
+                                from: sId,
+                                to: oId,
+                                label: predLabel,
+                                arrows: 'to',
+                                font: { align: 'middle' }
+                            });
+                        });
+
+                        const data = { nodes, edges };
+                        const options = {
+                            layout: { improvedLayout: true },
+                            edges: {
+                                smooth: true,
+                                arrows: { to: true }
+                            },
+                            physics: {
+                                enabled: true,
+                                stabilization: { iterations: 100 }
+                            }
+                        };
+
+                        new vis.Network(container, data, options);
+                    } catch (err) {
+                        throw new Error(`Error al parsear RDF: ${err.message}`);
+                    }
+                })
+                .catch(err => {
+                    console.error('Error cargando RDF:', err);
+                    container.innerHTML = `<p style="color:red;">Error al cargar el grafo: ${err.message}</p>`;
+                });
+
+            const toggle = document.getElementById('toggle');
+            const menu = document.getElementById('menu');
+            toggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+            });
+            document.addEventListener('click', (e) => {
+                if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+                    menu.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

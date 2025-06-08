@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visualizador RDF - TikaPaw</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+    #mynetwork { width: 100%; height: 600px; border: 1px solid #ccc; }
+    nav { background: #333; padding: 10px; }
+    nav a { color: white; margin-right: 10px; text-decoration: none; }
+    nav a:hover { text-decoration: underline; }
+  </style>
+  <script src="/vis-network.min.js"></script>
+<script src="/rdflib.min.js"></script>
+</head>
+<body>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/refugios">Refugios</a>
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+    <a href="/rdf">Descargar RDF</a>
+    <a href="/rdf?view=html">Ver RDF</a>
+  </nav>
+  <h1>Visualizador RDF</h1>
+  <div id="mynetwork"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('mynetwork');
+
+      fetch('/rdf')
+        .then(response => {
+          if (!response.ok) throw new Error('Error al obtener RDF');
+          return response.text();
+        })
+        .then(rdfText => {
+          try {
+            const store = $rdf.graph();
+            const baseURI = window.location.origin;
+            const contentType = 'application/rdf+xml';
+            $rdf.parse(rdfText, store, baseURI, contentType);
+
+            const nodes = new vis.DataSet();
+            const edges = new vis.DataSet();
+            let idCount = 0;
+            const nodeMap = new Map();
+
+            function addNode(uri) {
+              if (!nodeMap.has(uri)) {
+                let label = uri;
+                try {
+                  if (uri.startsWith('http')) {
+                    label = decodeURIComponent(uri.split(/[\/#]/).pop());
+                  }
+                } catch {}
+                nodes.add({ id: idCount, label: label });
+                nodeMap.set(uri, idCount);
+                idCount++;
+              }
+              return nodeMap.get(uri);
+            }
+
+            store.statements.forEach(triple => {
+              const s = triple.subject.value;
+              const p = triple.predicate.value;
+              const o = triple.object.value;
+
+              const sId = addNode(s);
+              const oId = addNode(o);
+
+              const predLabel = p.split(/[\/#]/).pop();
+              edges.add({
+                from: sId,
+                to: oId,
+                label: predLabel,
+                arrows: 'to',
+                font: { align: 'middle' }
+              });
+            });
+
+            const data = { nodes, edges };
+            const options = {
+              layout: { improvedLayout: true },
+              edges: {
+                smooth: true,
+                arrows: { to: true }
+              },
+              physics: {
+                enabled: true,
+                stabilization: { iterations: 100 }
+              }
+            };
+
+            new vis.Network(container, data, options);
+          } catch (err) {
+            container.innerHTML = `<p style="color:red;">Error al parsear RDF: ${err.message}</p>`;
+            console.error(err);
+          }
+        })
+        .catch(err => {
+          container.innerHTML = `<p style="color:red;">Error al obtener RDF: ${err.message}</p>`;
+          console.error(err);
+        });
+    });
+  </script>
+</body>
+</html>

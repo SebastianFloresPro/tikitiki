@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Búsqueda - TikaPaw</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <header>
+    <div class="logo-marca">
+      <a href="/" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+        <img src="/img/Cats Grooming.png" alt="Logo">
+        TikaPaw
+      </a>
+    </div>
+        <nav>
+      <a href="/">Home</a>
+      <a href="/refugios">Refugios</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </nav>
+  <div class="iconos">
+    <a href="/usuarios/login" title="Iniciar sesión">
+      <i class="fa-regular fa-user"></i>
+    </a>
+
+
+    <div style="position: relative; display: inline-block;">
+      <a href="#" id="toggle" title="Opciones" style="font-size: 20px; color: black; cursor: pointer;">
+        <i class="fa-solid fa-file-arrow-down"></i>
+      </a>
+
+      <div id="menu" style="display: none; position: absolute; background: white; border: 1px solid black; z-index: 10; right: 0; top: 30px;">
+       <div>
+        <a href="/rdf?view=html">Ver RDF</a> |
+        <a href="/rdf?view=graph">Descargar RDF</a>
+      </div>
+      <a href="/grafos.html" style="display: block; padding: 8px 12px; color: black; text-decoration: none;">Ver Grafo</a>
+      </div>
+    </div>
+  </div>
+  </header>
+
+  <section class="seccion-busqueda">
+    <div class="contenedor-busqueda">
+      <h2>Buscar Mascotas y Refugios</h2>
+      <div class="form-group">
+        <label for="buscar-mascota">Nombre o especie de mascota:</label>
+        <input type="text" id="buscar-mascota" placeholder="Ej. Luna, Perro">
+        <i class="fa-solid fa-magnifying-glass" onclick="buscarMascota()" style="cursor: pointer; margin-left: 10px;"></i>
+      </div>
+      <div class="form-group">
+        <label for="buscar-refugio">Nombre de refugio:</label>
+        <input type="text" id="buscar-refugio" placeholder="Ej. Refugio Amigos">
+        <i class="fa-solid fa-magnifying-glass" onclick="buscarRefugio()" style="cursor: pointer; margin-left: 10px;"></i>
+      </div>
+      <div id="resultados" style="margin-top: 20px;"></div>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 TikaPaw - Todos los derechos reservados
+  </footer>
+
+  <script src="/js/busqueda.js" defer></script>
+</body>
+</html>
+
+<script src="/js/BotonToggle.js"></script>

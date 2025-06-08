@@ -1,0 +1,126 @@
+<!--
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refugio - TikaPaw</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="logo-marca">
+      <a href="/" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+        <img src="/img/Cats Grooming.png" alt="Logo">
+        TikaPaw
+      </a>
+    </div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/refugios">Refugios</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </nav>
+    <div class="iconos">
+      <a href="/usuarios/login" title="Iniciar sesión">
+        <i class="fa-regular fa-user"></i>
+      </a>
+      <a href="/busqueda" title="Buscar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </a>
+      <a href="/favoritos" title="Favoritos">
+        <i class="fa-regular fa-heart"></i>
+      </a>
+    </div>
+  </header>
+  <section class="seccion-heroica">
+    <div class="izquierda-heroica">
+      <img src="/img/logo.png" alt="Gato decorativo">
+    </div>
+    <div class="derecha-heroica">
+      <div class="texto-heroico">DETALLES DEL REFUGIO</div>
+      <div class="breadcrumb">Home > Refugios > Refugio</div>
+      <div class="refugio-info">
+        <h2 id="refugio-nombre">Nombre del Refugio</h2>
+        <p>Teléfono: <span id="refugio-telefono"></span></p>
+        <p>Encargado: <span id="refugio-encargado"></span></p>
+      </div>
+      <h3>Mascotas Disponibles</h3>
+      <div class="contenedor-gatos"></div>
+    </div>
+  </section>
+  <footer>
+    © 2025 TikaPaw - Todos los derechos reservados
+  </footer>
+  <script src="/js/main.js" defer></script>
+</body>
+</html>
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refugio - TikaPaw</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="logo-marca">
+      <a href="/" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+        <img src="/img/Cats Grooming.png" alt="Logo">
+        TikaPaw
+      </a>
+    </div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/refugios">Refugios</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </nav>
+   <div class="iconos">
+            <a href="/usuarios/login" title="Iniciar sesión">
+                <i class="fa-regular fa-user"></i>
+            </a>
+            <div style="position: relative; display: inline-block;">
+                <a href="#" id="toggle" title="Opciones" style="font-size: 20px; color: black; cursor: pointer;">
+                    <i class="fa-solid fa-file-arrow-down"></i>
+                </a>
+                <div id="menu" style="display: none; position: absolute; background: white; border: 1px solid black; z-index: 10; right: 0; top: 30px;">
+                    <div>
+                        <a id="rdf-viewer-link" href="/mascotas/mascotas-rdf?view=html">Ver RDF de Mascotas</a> |
+                        <a id="rdf-download-link" href="/mascotas/mascotas-rdf">Descargar RDF</a>
+                    </div>
+                   <!-- <a id="graph-link">Ver grafo</a>-->
+
+                </div>
+            </div>
+        </div>
+  </header>
+  <section class="seccion-heroica">
+    <div class="izquierda-heroica">
+      <img src="/img/logo.png" alt="Gato decorativo">
+    </div>
+    <div class="derecha-heroica">
+      <div class="texto-heroico">DETALLES DEL REFUGIO</div>
+      <div class="breadcrumb">Home > Refugios > Refugio</div>
+      <div class="refugio-info">
+        <h2 id="refugio-nombre">Nombre del Refugio</h2>
+        <p>Teléfono: <span id="refugio-telefono"></span></p>
+        <p>Encargado: <span id="refugio-encargado"></span></p>
+      </div>
+      <h3>Mascotas Disponibles</h3>
+      <div class="contenedor-gatos"></div>
+    </div>
+  </section>
+  <footer>
+    © 2025 TikaPaw - Todos los derechos reservados
+  </footer>
+  <script src="/js/main.js" defer></script>
+  <script src="/js/BotonToggle.js"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikaPaw - Perfil de Usuario</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <script src="/js/perfilUsuario.js" defer></script> 
+</head>
+<body>
+    <header>
+        <div class="logo-marca">
+            <a href="/" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+                <img src="/img/Cats Grooming.png" alt="Logo">
+                TikaPaw
+            </a>
+        </div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/refugios">Refugios</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </nav>
+  <div class="iconos">
+    <a href="/usuarios/login" title="Iniciar sesión">
+      <i class="fa-regular fa-user"></i>
+    </a>
+
+
+    <div style="position: relative; display: inline-block;">
+      <a href="#" id="toggle" title="Opciones" style="font-size: 20px; color: black; cursor: pointer;">
+        <i class="fa-solid fa-file-arrow-down"></i>
+      </a>
+
+      <div id="menu" style="display: none; position: absolute; background: white; border: 1px solid black; z-index: 10; right: 0; top: 30px;">
+       <div>
+        <a href="/rdf?view=html">Ver RDF</a> |
+        <a href="/rdf?view=graph">Descargar RDF</a>
+      </div>
+      <a href="/grafos.html" style="display: block; padding: 8px 12px; color: black; text-decoration: none;">Ver Grafo</a>
+      </div>
+    </div>
+  </div>
+    </header>
+
+    <section class="seccion-heroica">
+        <div class="derecha-heroica">
+            <div class="breadcrumb">🏠 <span>Perfil</span></div>
+            <h1 class="titulo-refugio">Tu Perfil en TikaPaw</h1>
+            <p class="texto-heroico">Explora y gestiona tu información personal con amor por las patitas.</p>
+        </div>
+    </section>
+
+    <section class="seccion-informativa">
+        <div class="bloque">
+            <h2><i class="fa-solid fa-user"></i> Datos Personales</h2>
+            <div id="perfil">
+                <p><strong>Nombre:</strong> <span id="nombre">Cargando...</span></p>
+                <p><strong>Edad:</strong> <span id="edad">Cargando...</span></p>
+                <p><strong>Correo:</strong> <span id="correo">Cargando...</span></p>
+                <p><strong>Teléfono:</strong> <span id="telefono">Cargando...</span></p>
+            </div>
+            <button id="logout" class="boton-heroico">Cerrar sesión</button>
+        </div>
+    </section>
+
+    <section class="seccion-solicitudes">
+        <h2><i class="fa-solid fa-paw"></i> Solicitudes de Adopción</h2>
+        <p id="mensaje-error" class="mensaje-error oculto"></p>
+        <div id="resultados-solicitudes" class="contenedor-gatos"></div>
+    </section>
+    
+    <footer>
+        © 2025 TikaPaw - Todos los derechos reservados
+    </footer>
+</body>
+</html>
+
+<script src="/js/BotonToggle.js"></script>

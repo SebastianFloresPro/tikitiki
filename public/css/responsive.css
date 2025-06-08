@@ -1,0 +1,273 @@
+/* ================================
+    Responsive.css - Media Queries
+=================================== */
+
+/*
+@media (max-width: 768px) {
+    .seccion-heroica {
+        flex-direction: column;
+        height: auto;
+        padding: 30px;
+    }
+
+    .izquierda-heroica, .derecha-heroica {
+        flex: 100%;
+        max-width: 100%;
+    }
+
+    .derecha-heroica {
+        margin-top: 30px;
+    }
+
+    .texto-heroico {
+        font-size: 14px; 
+    }
+}
+
+@media (max-width: 600px) {
+    .contenedor-gatos, .contenedor-beneficios {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .barra-busqueda input {
+        width: 100%;
+    }
+}
+    */
+
+   /* ================================
+    Responsive.css - Media Queries
+=================================== */
+
+/* Configuración base para el header */
+header {
+    display: flex;
+    flex-direction: row; /* Siempre en línea */
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Por si no cabe en pantallas pequeñas */
+    padding: 20px;
+    gap: 10px;
+}
+
+.logo-marca {
+    display: flex;
+    align-items: center;
+}
+
+nav {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: center;
+}
+
+.iconos {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+.buscador {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.busqueda-input {
+    padding: 5px;
+}
+
+/* Laptop (hasta 1200px) */
+@media (max-width: 1200px) {
+    .seccion-heroica {
+        padding: 40px 10px;
+    }
+
+    .derecha-heroica .texto-heroico {
+        font-size: 1.1em;
+    }
+
+    .galeria-gatos .contenedor-gatos {
+        justify-content: center;
+    }
+
+    .tarjeta-gato {
+        width: 180px;
+    }
+}
+
+/* Tablet (hasta 768px) */
+@media (max-width: 768px) {
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    nav a {
+        margin: 5px;
+        font-size: 0.95em;
+    }
+
+    .iconos {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .buscador {
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .busqueda-input {
+        width: 150px;
+    }
+
+    .seccion-heroica {
+        flex-direction: column;
+        height: auto;
+        padding: 30px 10px;
+    }
+
+    .izquierda-heroica, .derecha-heroica {
+        flex: 100%;
+        max-width: 100%;
+    }
+
+    .derecha-heroica {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .texto-heroico {
+        font-size: 14px;
+    }
+
+    .boton-heroico {
+        margin: 10px 5px;
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+
+    .contenedor-gatos, .contenedor-beneficios {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .tarjeta-gato {
+        width: 100%;
+        max-width: 300px;
+        margin-bottom: 20px;
+    }
+
+    .beneficio {
+        margin-bottom: 20px;
+    }
+
+    .formulario-adopcion {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+
+    .form-group {
+        width: 100%;
+    }
+
+    .form-group input, .form-group textarea, .form-group select {
+        width: 100%;
+    }
+}
+
+/* Celular (hasta 600px) */
+@media (max-width: 600px) {
+    .logo-marca img {
+        width: 40px;
+    }
+
+    nav {
+        justify-content: center;
+    }
+
+    nav a {
+        font-size: 0.9em;
+    }
+
+    .iconos {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .iconos a {
+        margin: 5px;
+    }
+
+    .buscador {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .busqueda-input {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .titulo-refugio {
+        font-size: 1.8em;
+    }
+
+    .texto-heroico {
+        font-size: 12px;
+    }
+
+    .breadcrumb {
+        font-size: 0.8em;
+    }
+
+    .tarjeta-gato {
+        width: 100%;
+        max-width: 250px;
+    }
+
+    .beneficio {
+        width: 100%;
+        text-align: center;
+    }
+
+    .form-group label {
+        font-size: 0.9em;
+    }
+
+    .form-group input, .form-group textarea, .form-group select {
+        font-size: 0.9em;
+        padding: 8px;
+    }
+
+    .boton-heroico {
+        width: 100%;
+        padding: 10px;
+        font-size: 0.9em;
+    }
+
+    .footer-links a {
+        display: block;
+        margin: 5px 0;
+    }
+}
+
+/* Pantallas muy pequeñas (hasta 400px) */
+@media (max-width: 400px) {
+    .titulo-refugio {
+        font-size: 1.5em;
+    }
+
+    .texto-heroico {
+        font-size: 10px;
+    }
+
+    .form-group input, .form-group textarea, .form-group select {
+        font-size: 0.8em;
+    }
+}

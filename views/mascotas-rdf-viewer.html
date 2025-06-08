@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikaPaw - Visualizador RDF de Mascota</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo-marca">
+            <a href="/" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+                <img src="/img/Cats Grooming.png" alt="Logo">
+                TikaPaw
+            </a>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/refugios">Refugios</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+        </nav>
+        <div class="iconos">
+            <a href="/usuarios/login" title="Iniciar sesión">
+                <i class="fa-regular fa-user"></i>
+            </a>
+            <a href="/busqueda" title="Buscar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </a>
+            <div style="position: relative; display: inline-block;">
+                <a href="#" id="toggle" title="Opciones" style="font-size: 20px; color: black; cursor: pointer;">
+                    <i class="fa-solid fa-file-arrow-down"></i>
+                </a>
+                <div id="menu" style="display: none; position: absolute; background: white; border: 1px solid black; z-index: 10; right: 0; top: 30px;">
+                    <div>
+                        <a id="rdf-viewer-link" href="/mascotas/mascotas-rdf?view=html">Ver RDF</a> |
+                        <a id="rdf-download-link" href="/mascotas/mascotas-rdf">Descargar RDF</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <h1>Visualizador RDF de Mascota</h1>
+        <p>Visualización automática del RDF generado para la mascota:</p>
+        <div id="mynetwork" style="height: 600px; border: 1px solid #ccc;"></div>
+    </main>
+    <footer>
+        <p>© 2025 TikaPaw - Todos los derechos reservados</p>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const idmascota = urlParams.get('idmascota');
+
+            if (idmascota) {
+                document.getElementById('rdf-viewer-link').href = `/mascotas/mascotas-rdf?view=html&idmascota=${idmascota}`;
+                document.getElementById('rdf-download-link').href = `/mascotas/mascotas-rdf?idmascota=${idmascota}`;
+
+                fetch(`/mascotas/mascotas-rdf?idmascota=${idmascota}`)
+                    .then(res => {
+                        if (!res.ok) throw new Error(`Error al cargar RDF: ${res.statusText}`);
+                        return res.text();
+                    })
+                    .then(str => {
+                        console.log('RDF recibido:', str); 
+                        return (new window.DOMParser()).parseFromString(str, "text/xml");
+                    })
+                    .then(data => {
+                        const nodes = new vis.DataSet();
+                        const edges = new vis.DataSet();
+                        const mascotas = data.getElementsByTagName("rdf:Description");
+
+                        if (mascotas.length === 0) {
+                            throw new Error('No se encontraron descripciones RDF');
+                        }
+
+                        for (let m of mascotas) {
+                            const about = m.getAttribute('rdf:about');
+                            const type = m.getElementsByTagName("rdf:type")[0]?.getAttribute('rdf:resource');
+                            const nombre = m.getElementsByTagName("tp:nombre")[0]?.textContent || 'Sin nombre';
+                            const nodeId = about;
+                            const label = type.includes('Mascota') ? `Mascota: ${nombre}` : `Refugio: ${nombre}`;
+
+                            nodes.add({
+                                id: nodeId,
+                                label,
+                                shape: type.includes('Mascota') ? 'box' : 'ellipse',
+                                color: type.includes('Mascota') ? '#ffcc00' : '#00ccff'
+                            });
+
+                            const perteneceA = m.getElementsByTagName("tp:perteneceA")[0]?.getAttribute('rdf:resource');
+                            if (perteneceA) {
+                                edges.add({ from: about, to: perteneceA, label: 'perteneceA' });
+                            }
+                        }
+
+                        const container = document.getElementById('mynetwork');
+                        const visData = { nodes, edges };
+                        const options = { edges: { font: { align: 'middle' } } };
+                        new vis.Network(container, visData, options);
+                    })
+                    .catch(err => {
+                        console.error("Error cargando RDF:", err);
+                        document.getElementById('mynetwork').innerHTML = `<p>Error al cargar el grafo: ${err.message}</p>`;
+                    });
+
+                const toggle = document.getElementById('toggle');
+                const menu = document.getElementById('menu');
+                toggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+                });
+                document.addEventListener('click', (e) => {
+                    if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+                        menu.style.display = 'none';
+                    }
+                });
+            } else {
+                console.error('No se proporcionó idmascota en la URL:', window.location.href);
+                document.getElementById('mynetwork').innerHTML = "<p>Error: No se proporcionó un ID de mascota.</p>";
+            }
+        });
+    </script>
+</body>
+</html>

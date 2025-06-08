@@ -1,0 +1,13 @@
+/* =============================
+   base.css - Estilos generales y reseteo
+============================= */
+
+* {
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    margin: 0;
+    background-color: #f4f4f4;
+}

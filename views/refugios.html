@@ -1,0 +1,200 @@
+<!--
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refugios - TikaPaw</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="logo-marca">
+      <a href="/" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+        <img src="/img/Cats Grooming.png" alt="Logo">
+        TikaPaw
+      </a>
+    </div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/refugios">Refugios</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </nav>
+    <div class="iconos">
+      <a href="/usuarios/login" title="Iniciar sesión">
+        <i class="fa-regular fa-user"></i>
+      </a>
+      <a href="/busqueda" title="Buscar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </a>
+      <a href="/favoritos" title="Favoritos">
+        <i class="fa-regular fa-heart"></i>
+      </a>
+    </div>
+  </header>
+  <section class="about-hero">
+    <h2 class="titulo-refugio">Refugios</h2>
+    <div class="barras-busqueda">
+      <div class="barra-busqueda">
+        <i class="fa-solid fa-bars"></i>
+        <input type="text" placeholder="Busca un refugio, albergue...">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+    </div>
+    <p style="margin-top: 20px; font-size: 14px; color: #777;">
+      Encuentra un hogar para tu nuevo mejor amigo
+    </p>
+  </section>
+  <section class="galeria-gatos">
+    <h2 class="titulo-refugio">🐾 Refugios Disponibles 🐾</h2>
+    <div class="contenedor-gatos">
+      <div class="tarjeta-gato">
+        <img src="/img/cat.jpeg" alt="Gato 1">
+        <h3>Save Animals</h3>
+        <p>Telefono: 987654321</p>
+        <nav><button class="boton-adoptar"><a href="/refugios/refugio">Mas informacion de refugio</a></button></nav>
+      </div>
+      <div class="tarjeta-gato">
+        <img src="/img/cat.jpeg" alt="Gato 2">
+        <h3>Huellitas de amor</h3>
+        <p>Telefono: 987654321</p>
+        <nav><button class="boton-adoptar"><a href="/refugios/refugio">Mas informacion de refugio</a></button></nav>
+      </div>
+      <div class="tarjeta-gato">
+        <img src="/img/cat.jpeg" alt="Gato 3">
+        <h3>Patitas Felices</h3>
+        <p>Telefono: 987654321</p>
+        <nav><button class="boton-adoptar"><a href="/refugios/refugio">Mas informacion de refugio</a></button></nav>
+      </div>
+      <div class="tarjeta-gato">
+        <img src="/img/cat.jpeg" alt="Gato 1">
+        <h3>Save Animals</h3>
+        <p>Telefono: 987654321</p>
+        <nav><button class="boton-adoptar"><a href="/refugios/refugio">Mas informacion de refugio</a></button></nav>
+      </div>
+    </div>
+  </section>
+  <footer>
+    © 2025 TikaPaw - Todos los derechos reservados
+  </footer>
+  <script src="/js/main.js" defer></script>
+  <script>
+    /*
+    if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      console.log("Es móvil");
+    } else {
+      console.log("Es escritorio");
+    }
+      */
+  </script>
+</body>
+</html>
+--><!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refugios - TikaPaw</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="logo-marca">
+      <a href="/" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+        <img src="/img/Cats Grooming.png" alt="Logo">
+        TikaPaw
+      </a>
+    </div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/refugios">Refugios</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </nav>
+    <div class="iconos">
+      <a href="/usuarios/login" title="Iniciar sesión">
+        <i class="fa-regular fa-user"></i>
+      </a>
+      <div class="buscador">
+        <input type="text" id="buscar-refugio" placeholder="Busca un refugio, albergue..." class="busqueda-input">
+        <i class="fa-solid fa-magnifying-glass" onclick="buscarRefugio()"></i>
+      </div>
+      <div class="buscador">
+        <input type="text" id="buscar-mascota" placeholder="Adopta una mascota..." class="busqueda-input">
+        <i class="fa-solid fa-magnifying-glass" onclick="buscarMascota()"></i>
+    
+    <div style="position: relative; display: inline-block;">
+      <a href="#" id="toggle" title="Opciones" style="font-size: 20px; color: black; cursor: pointer;">
+        <i class="fa-solid fa-file-arrow-down"></i>
+      </a>
+
+      <div id="menu" style="display: none; position: absolute; background: white; border: 1px solid black; z-index: 10; right: 0; top: 30px;">
+       <div>
+        <a href="/refugios/rdf?view=html">Ver RDF</a> |
+        <a href="/refugios/rdf">Descargar RDF</a>
+      </div>
+      <a href="/refugios/rdf?view=graph" style="display: block; padding: 8px 12px; color: black; text-decoration: none;">grafos</a>
+      </div>
+    </div>
+  </div>
+  </header>
+<section class="seccion-heroica">
+</section>
+
+<section class="about-hero">
+  <h2 class="titulo-refugio">Refugios</h2>
+
+  <div class="barras-busqueda">
+    <div class="barra-busqueda">
+      <i class="fa-solid fa-bars"></i>
+      <div class="buscador">
+        <input type="text" id="buscar-refugio-informativa" placeholder="Busca un refugio, albergue..." class="busqueda-input">
+        <i class="fa-solid fa-magnifying-glass" onclick="buscarRefugioInformativa()"></i>
+      </div>
+    </div>
+  </div>
+
+  <!--
+  <div id="resultados-informativa"></div>
+
+  <p style="margin-top: 20px; font-size: 14px; color: #777;">-->
+    Encuentra un hogar para tu nuevo mejor amigo
+  </p>
+</section>
+
+
+  
+  <section class="galeria-gatos">
+    <h2 class="titulo-refugio">🐾 Refugios Disponibles 🐾</h2>
+    <div class="contenedor-gatos">
+      <% refugios.forEach(refugio => { %>
+        <div class="tarjeta-gato">
+          <img src="<%= refugio.imagenurl %>" alt="Gato 1">
+          <h3><%= refugio.nombrecentro %></h3>
+          <p>Teléfono: <%= refugio.telefono %></p>
+          <nav>
+            <button class="boton-adoptar">
+              <a href="/refugios/refugio/<%= refugio.idcentro %>">Más información de refugio</a>
+            </button>
+          </nav>
+        </div>
+      <% }); %>
+    </div>
+  </section>
+
+  <div id="resultados"></div>
+
+  <footer>
+    © 2025 TikaPaw - Todos los derechos reservados
+  </footer>
+
+  <script src="/js/main.js" defer></script>
+  <script src="/js/busqueda.js" defer></script>
+<script src="/js/BotonToggle.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+/* =============================
+   header.css - Estilos del Header y navegación
+============================= */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo-marca {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.logo-marca img {
+    height: 40px;
+    vertical-align: middle;
+}
+
+nav {
+    display: flex;
+    gap: 30px; 
+    margin-right: 40px; 
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #ff6f61; 
+}
+
+.iconos {
+    display: flex;
+    gap: 20px;
+}
+
+.iconos a {
+    color: #333;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+.iconos a:hover {
+    color: #ff6f61;
+}

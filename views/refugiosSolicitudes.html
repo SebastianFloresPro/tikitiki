@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikaPaw - Solicitudes de Adopción</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <script src="/js/refugiosSolicitudes.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="logo-marca">
+            <a href="/" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+                <img src="/img/Cats Grooming.png" alt="Logo">
+                TikaPaw
+            </a>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/refugios">Refugios</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+        </nav>
+        <div class="iconos">
+            <a href="/usuarios/perfil/refugio" title="Perfil">
+                <i class="fa-regular fa-user"></i>
+            </a>
+            <a href="/busqueda" title="Buscar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </a>
+            <a href="/favoritos" title="Favoritos">
+                <i class="fa-regular fa-heart"></i>
+            </a>
+        </div>
+    </header>
+
+    <section class="seccion-heroica">
+        <div class="izquierda-heroica">
+            <img src="/img/cat.jpeg" alt="Mascota solicitada" style="max-width: 300px; border-radius: 10px;">
+        </div>
+        <div class="derecha-heroica">
+            <div class="breadcrumb">🏠 <a href="/refugios">Refugios</a> > <span>Solicitudes de Adopción</span></div>
+            <h1 class="titulo-refugio">Solicitudes de Adopción</h1>
+            <p class="texto-heroico">Revisa las solicitudes de adopción para esta mascota y toma decisiones que cambien vidas.</p>
+        </div>
+    </section>
+
+    <section class="galeria-gatos">
+        <h2>Solicitudes para la Mascota</h2>
+        <div id="mensaje-error" class="oculto mensaje-error"></div>
+        <div id="resultados-solicitudes" class="contenedor-gatos"></div>
+    </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="/about">About</a> 
+            <a href="/contact">Contact</a> |
+            <a href="/privacy.html">Privacy</a> |
+            <a href="/terms.html">Terms</a>
+        </div>
+        © 2025 TikaPaw - Todos los derechos reservados
+    </footer>
+</body>
+</html>
+
+<script src="/js/BotonToggle.js"></script>

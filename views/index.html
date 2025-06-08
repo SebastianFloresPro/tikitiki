@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikaPaw</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+  <div class="logo-marca">
+    <a href="/" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+      <img src="/img/Cats Grooming.png" alt="Logo">
+      TikaPaw
+    </a>
+  </div>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/refugios">Refugios</a>
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+  </nav>
+  <div class="iconos">
+    <a href="/usuarios/login" title="Iniciar sesión">
+      <i class="fa-regular fa-user"></i>
+    </a>
+    <div class="buscador">
+      <input type="text" id="buscar-refugio" placeholder="Busca un refugio, albergue..." class="busqueda-input">
+      <i class="fa-solid fa-magnifying-glass" onclick="buscarRefugio()"></i>
+    </div>
+    <div class="buscador">
+      <input type="text" id="buscar-mascota" placeholder="Adopta una mascota..." class="busqueda-input">
+      <i class="fa-solid fa-magnifying-glass" onclick="buscarMascota()"></i>
+    </div>
+
+    <div style="position: relative; display: inline-block;">
+      <a href="#" id="toggle" title="Opciones" style="font-size: 20px; color: black; cursor: pointer;">
+        <i class="fa-solid fa-file-arrow-down"></i>
+      </a>
+
+      <div id="menu" style="display: none; position: absolute; background: white; border: 1px solid black; z-index: 10; right: 0; top: 30px;">
+       <div>
+        <a href="/rdf?view=html">Ver RDF</a> |
+        <a href="/rdf?view=graph">Descargar RDF</a>
+      </div>
+      <a href="/grafos.html" style="display: block; padding: 8px 12px; color: black; text-decoration: none;">grafos</a>
+      </div>
+    </div>
+  </div>
+</header>
+    <section class="seccion-heroica">
+        <div class="izquierda-heroica">
+            <img src="/img/logo.png" alt="Gato central">
+        </div>
+        <div class="derecha-heroica">
+            <div class="texto-heroico">
+                Cada patita tiene una historia esperando ser escrita. Dale una segunda oportunidad al amor, conoce a tu futura mascota.<br>
+                La felicidad comienza con un ladrido, un ronroneo… ¿Estás listo para recibirla?
+            </div>
+            <div class="breadcrumb">Home</div>
+            <div class="botones">
+                <button class="boton-heroico">Más información</button>
+                <button class="boton-heroico" onclick="window.location.href='/refugios'">Adopta ahora</button>
+            </div>
+        </div>
+    </section>
+<section class="seccion-informativa">
+    <h2>Descubre los mejores centros de adopción y refugios de mascotas, donde cada vida espera una oportunidad</h2>
+    <div class="barras-busqueda">
+        <div class="barra-busqueda">
+            <i class="fa-solid fa-bars"></i>
+            <div class="buscador">
+                <input type="text" id="buscar-refugio-informativa" placeholder="Busca un refugio, albergue..." class="busqueda-input">
+                <i class="fa-solid fa-magnifying-glass" onclick="buscarRefugioInformativa()"></i>
+            </div>
+        </div>
+        <div class="barra-busqueda">
+            <i class="fa-solid fa-bars"></i>
+            <input type="text" id="buscar-mascota-informativa" placeholder="Adopta una mascota">
+            <i class="fa-solid fa-magnifying-glass" onclick="buscarMascotaInformativa()"></i>
+        </div>
+    </div>
+    <div id="resultados-informativa"></div>
+</section>
+    <section class="beneficios">
+        <h2>¿Por qué adoptar en TikaPaw?</h2>
+        <div class="contenedor-beneficios">
+            <div class="beneficio">
+                <i class="fa-solid fa-paw"></i>
+                <h3>Amor Incondicional</h3>
+                <p>Encuentra un compañero fiel que llenará tu vida de alegría.</p>
+            </div>
+            <div class="beneficio">
+                <i class="fa-solid fa-hand-holding-heart"></i>
+                <h3>Apoya a Refugios</h3>
+                <p>Cada adopción contribuye a rescatar más animales necesitados.</p>
+            </div>
+            <div class="beneficio">
+                <i class="fa-solid fa-house"></i>
+                <h3>Un hogar para siempre</h3>
+                <p>Brindas una segunda oportunidad a un ser lleno de amor.</p>
+            </div>
+        </div>
+    </section>
+    <section class="galeria-gatos">
+            <h2>Gatitos en adopción</h2>
+            <div id="contenedor-gatos" class="contenedor-gatos"></div>
+            <a href="/refugios" class="boton-ver-mas">Ver más gatos</a>
+    </section>
+    <footer>
+        <div class="footer-links">
+            <a href="/about">About</a> 
+            <a href="/contact">Contact</a> |
+            <a href="/privacy.html">Privacy</a> |
+            <a href="/terms.html">Terms</a>
+        </div>
+        © 2025 TikaPaw - Todos los derechos reservados
+    </footer>
+    <script src="/js/main.js" defer></script>
+    
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        cargarMascotas();
+    });
+
+async function cargarMascotas() {
+  try {
+    const response = await fetch('/mascotas-public');
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+    const data = await response.json();
+    console.log('Mascotas recibidas:', data); // 👈 revisa esto en la consola
+
+    const contenedorGatos = document.getElementById('contenedor-gatos');
+    contenedorGatos.innerHTML = '';
+
+    if (data.success && data.mascotas.length > 0) {
+      data.mascotas.slice(0, 3).forEach(mascota => {
+        const tarjeta = document.createElement('div');
+        tarjeta.className = 'tarjeta-gato';
+        tarjeta.innerHTML = `
+          <img src="${mascota.foto || '/img/cat.jpeg'}" alt="${mascota.nombre}">
+          <h3>${mascota.nombre}</h3>
+          <p>${mascota.edad} años • ${mascota.descripcion || 'Sin descripción'}</p>
+          <a href="/mascota.html?mascotaId=${mascota.idmascota}" class="boton-adoptar">Adóptame</a>
+        `;
+        contenedorGatos.appendChild(tarjeta);
+      });
+    } else {
+      contenedorGatos.innerHTML = '<p>No hay mascotas disponibles.</p>';
+    }
+  } catch (error) {
+    console.error('Error al cargar mascotas:', error);
+    document.getElementById('contenedor-gatos').innerHTML = `<p>Error: ${error.message}</p>`;
+  }
+}
+
+</script>
+</body>
+</html>
+<script src="/js/busqueda.js" defer></script>
+<script src="/js/BotonToggle.js"></script>

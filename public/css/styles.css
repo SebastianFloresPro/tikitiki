@@ -1,0 +1,319 @@
+.oculto {
+    display: none;
+}
+
+.tarjeta-gato {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.boton-solicitudes, .actualizar-estado {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.boton-solicitudes:hover, .actualizar-estado:hover {
+    background-color: #45a049;
+}
+
+.estado-solicitud {
+    padding: 5px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+#mensaje-error {
+    color: red;
+    margin-top: 10px;
+}
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #f2f2f2;
+    }
+
+    header {
+      background-color: #fff;
+      padding: 15px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #ddd;
+    }
+
+    header .logo img {
+      height: 40px;
+    }
+
+    nav a {
+      margin: 0 12px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .seccion-mascota {
+      max-width: 1000px;
+      background: #fff;
+      margin: 40px auto;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .mascota-contenido {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .mascota-imagen {
+      flex: 1 1 300px;
+      max-width: 400px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .mascota-detalles {
+      flex: 1 1 300px;
+    }
+
+    .mascota-detalles h2 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    .mascota-detalles p {
+      margin: 12px 0;
+      font-size: 16px;
+      color: #555;
+    }
+
+    .boton-adoptar, .boton-volver {
+      display: inline-block;
+      margin-top: 20px;
+      background-color: #eb7f5b;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .boton-volver {
+      background-color: #eb7f5b;
+      margin-left: 10px;
+    }
+
+    .boton-adoptar:hover {
+      background-color: #eb7f5b;
+    }
+
+    .boton-volver:hover {
+      background-color: #eb7f5b;
+    }
+
+    .mensaje-exito, .mensaje-error {
+      margin-top: 15px;
+      font-weight: 600;
+      display: none;
+    }
+
+    .mensaje-exito.visible {
+      color: #eb7f5b;
+      display: block;
+    }
+
+    .mensaje-error.visible {
+      color: #dc3545;
+      display: block;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #777;
+      margin-top: 60px;
+    }
+
+    @media (max-width: 768px) {
+      .mascota-contenido {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .mascota-detalles {
+        text-align: center;
+      }
+    }
+
+    .form-group {
+    margin-bottom: 1rem;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+.tarjeta-gato {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+.oculta {
+    display: none;
+}
+.visible {
+    display: block;
+    color: red;
+}
+/*        GRAFOS                                           */
+
+.seccion-rdf {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.seccion-rdf h1 {
+    text-align: center;
+    color: #eb7f5b;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.seccion-rdf p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#fileInput {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    background-color: #f9f9f9;
+    font-size: 16px;
+}
+
+#mynetwork {
+    height: 500px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fafafa;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    margin: 30px auto;
+    width: 95%;
+}
+.mascota-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 5px;
+    max-width: 300px;
+    display: inline-block;
+    vertical-align: top;
+}
+.mascota-card img {
+    max-width: 100%;
+    height: auto;
+}
+.bloque {
+    max-width: 600px;
+    margin: 0 auto;
+}
+.contenedor-solicitudes {
+  display: flex;
+  flex-wrap: wrap;       /* Permite que las tarjetas bajen a la siguiente línea si no caben */
+  gap: 20px;             /* Espacio entre tarjetas */
+  justify-content: center; /* Centra horizontalmente el contenido */
+  padding: 10px 0;
+}
+
+.solicitud-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  width: 280px;          /* Tamaño fijo o relativo para que no sean gigantes */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.solicitud-card:hover {
+  transform: scale(1.05);
+}
+
+.solicitud img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.solicitud-info {
+  padding: 15px;
+  text-align: center;
+}
+
+.solicitud-info h3 {
+  margin: 0 0 10px;
+  font-weight: 600;
+}
+
+.solicitud-info p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.btn-ver-detalles {
+  margin-top: 10px;
+  background-color: #2b7a78;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.btn-ver-detalles:hover {
+  background-color: #3aafa9;
+}
+

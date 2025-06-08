@@ -1,0 +1,13 @@
+/* =============================
+   main.css 
+   Importación de los estilos
+============================= */
+@import url('./base.css');
+@import url('./header.css');
+@import url('./hero.css');
+@import url('./galeria.css');
+@import url('./beneficios.css');
+@import url('./formularios.css');
+@import url('./footer.css');
+@import url('./responsive.css');
+@import url('./styles.css');

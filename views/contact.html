@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Contacto | TikaPaw</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <header>
+    <div class="logo-marca">
+      <a href="/" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+        <img src="/img/Cats Grooming.png" alt="Logo">
+        <span style="font-weight: 800;">TikaPaw</span>
+      </a>
+    </div>
+        <nav>
+      <a href="/">Home</a>
+      <a href="/refugios">Refugios</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </nav>
+  <div class="iconos">
+    <a href="/usuarios/login" title="Iniciar sesión">
+      <i class="fa-regular fa-user"></i>
+    </a>
+
+
+    <div style="position: relative; display: inline-block;">
+      <a href="#" id="toggle" title="Opciones" style="font-size: 20px; color: black; cursor: pointer;">
+        <i class="fa-solid fa-file-arrow-down"></i>
+      </a>
+
+      <div id="menu" style="display: none; position: absolute; background: white; border: 1px solid black; z-index: 10; right: 0; top: 30px;">
+       <div>
+        <a href="/rdf?view=html">Ver RDF</a> |
+        <a href="/rdf?view=graph">Descargar RDF</a>
+      </div>
+      <a href="/grafos.html" style="display: block; padding: 8px 12px; color: black; text-decoration: none;">Ver Grafo</a>
+      </div>
+    </div>
+  </div>
+  </header>
+  <section class="seccion-heroica">
+    <h1 class="titulo-refugio">¡Hablemos!</h1>
+    <p>¿Tienes preguntas o quieres colaborar con TikaPaw? ¡Estamos felices de leerte!</p>
+  </section>
+  <section class="formulario-contacto">
+    <form onsubmit="mostrarMensaje(event)">
+      <label for="nombre">Nombre</label>
+      <input type="text" id="nombre" placeholder="Tu nombre" required>
+      <label for="correo">Correo electrónico</label>
+      <input type="email" id="correo" placeholder="tu@email.com" required>
+      <label for="mensaje">Mensaje</label>
+      <textarea id="mensaje" placeholder="Cuéntanos en qué podemos ayudarte..."></textarea>
+      <button type="submit">Enviar mensaje</button>
+      <div id="mensaje-exito" class="mensaje-exito oculto">
+        ¡Gracias por contactarnos! 🐾 Te responderemos pronto.
+      </div>
+    </form>
+  </section>
+  <footer>
+    © 2025 TikaPaw - Todos los derechos reservados
+  </footer>
+  <script>
+    function mostrarMensaje(event) {
+      event.preventDefault();
+      const exito = document.getElementById('mensaje-exito');
+      exito.classList.remove('oculto');
+      setTimeout(() => {
+        exito.classList.add('oculto');
+      }, 5000);
+    }
+  </script>
+</body>
+</html>
+
+<script src="/js/BotonToggle.js"></script>
