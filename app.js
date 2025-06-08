@@ -42,6 +42,7 @@ app.listen(port, () => {
 });
 */
 // app.js
+// app.js
 require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
@@ -51,51 +52,46 @@ const cors = require('cors');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const { db, sequelize } = require('./config/database');
 
-const sessionStore = new SequelizeStore({
-    db: sequelize,  // <-- Usar directamente esta instancia
-    tableName: 'sessions',
-    checkExpirationInterval: 15 * 60 * 1000,
-    expiration: 7 * 24 * 60 * 60 * 1000
-});
-
-
-// Importar rutas
-const indexRoutes = require('./routes/index');
-const usuariosRoutes = require('./routes/usuarios');
-const refugiosRoutes = require('./routes/refugios');
-const mascotasRoutes = require('./routes/mascotas');
-const solicitudesRoutes = require('./routes/solicitudes');
-
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Configuración CORS
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://tikapawdbp.onrender.com',
+  'https://tikapawdbp-48n3.onrender.com'
+];
+
+// Middleware CORS (solo 1 vez)
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'https://tikapawdbp.onrender.com',
+    origin: function(origin, callback) {
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) {
+            callback(null, origin); // <-- esta línea es clave para que el header sea correcto
+        } else {
+            callback(new Error('CORS policy: Origin no permitido - ' + origin));
+        }
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 
-// Habilitar trust proxy (necesario para Render)
 app.set('trust proxy', 1);
 
-// Middlewares básicos
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'views')));
 
-// Utilidad para configurar correctamente las cookies
-const isProduction = process.env.NODE_ENV === 'production';
-const cookieSettings = {
-    secure: isProduction,
-    httpOnly: true,
-    sameSite: isProduction ? 'none' : 'lax',
-    maxAge: 7 * 24 * 60 * 60 * 1000 // 7 días
-};
+const sessionStore = new SequelizeStore({
+    db: sequelize,
+    tableName: 'sessions',
+    checkExpirationInterval: 15 * 60 * 1000,
+    expiration: 7 * 24 * 60 * 60 * 1000
+});
 
+const isProduction = process.env.NODE_ENV === 'production';
 
 app.use(session({
     secret: process.env.SESSION_SECRET || '91119adbb9f0f692a5838d138883bd53',
@@ -103,13 +99,16 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     proxy: true,
-    cookie: cookieSettings
+    cookie: {
+        secure: isProduction,
+        httpOnly: true,
+        sameSite: isProduction ? 'none' : 'lax',
+        maxAge: 7 * 24 * 60 * 60 * 1000
+    }
 }));
 
-// Sincronizar la base de datos de sesiones
 sessionStore.sync();
 
-// Middleware para debug de sesión
 app.use((req, res, next) => {
     console.log('Sesión actual:', {
         userId: req.session.userId,
@@ -120,13 +119,12 @@ app.use((req, res, next) => {
 });
 
 // Rutas
-app.use('/', indexRoutes);
-app.use('/usuarios', usuariosRoutes);
-app.use('/refugios', refugiosRoutes);
-app.use('/mascotas', mascotasRoutes);
-app.use('/solicitudes', solicitudesRoutes);
+app.use('/', require('./routes/index'));
+app.use('/usuarios', require('./routes/usuarios'));
+app.use('/refugios', require('./routes/refugios'));
+app.use('/mascotas', require('./routes/mascotas'));
+app.use('/solicitudes', require('./routes/solicitudes'));
 
-// Iniciar servidor
 app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);
 });
