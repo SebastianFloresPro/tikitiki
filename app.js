@@ -105,7 +105,6 @@ const port = process.env.PORT || 3000;
 // solo 1 vez en todo el backend, justo antes de middlewares.
 const allowedOrigins = [
   'http://localhost:3000',
-  'https://tikapawdbp.onrender.com',
   'https://tikapawdbp-48n3.onrender.com'
 ];
 
