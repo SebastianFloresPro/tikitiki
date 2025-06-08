@@ -101,35 +101,56 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // --- CONFIGURACIÓN DE CORS ---
-// Definí aquí el arreglo allowedOrigins y la configuración cors,
-// solo 1 vez en todo el backend, justo antes de middlewares.
 const allowedOrigins = [
   'http://localhost:3000',
-  'https://tikapawdbp-48n3.onrender.com'
+  'https://tikapawdbp-48n3.onrender.com'  // Tu frontend REAL
 ];
 
+// Middleware CORS oficial
 app.use(cors({
-  origin: allowedOrigins,
+  origin: function(origin, callback) {
+    // Permite solicitudes sin origin (ej: Postman o curl)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS no permitido para el origen: ' + origin));
+    }
+  },
   credentials: true
 }));
 
-// --- CONFIGURACIONES BÁSICAS ---
+// Middleware para manejar OPTIONS y headers CORS personalizados
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+  }
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization,Accept,X-Requested-With');
 
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(204);
+  }
+
+  next();
+});
+
+// --- CONFIGURACIONES BÁSICAS ---
 app.set('trust proxy', 1);  // Para producción detrás de proxy (ej: Heroku)
 
-app.use(express.json());             // Para parsear JSON
-app.use(express.urlencoded({ extended: true }));  // Para parsear form data
-app.use(cookieParser());             // Para cookies
-app.use(express.static(path.join(__dirname, 'public')));   // Archivos públicos
-app.use(express.static(path.join(__dirname, 'views')));    // Vistas estáticas
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'views')));
 
-// --- CONFIGURACIÓN DE SESIÓN CON SequelizeStore ---
-
+// --- CONFIGURACIÓN DE SESIÓN ---
 const sessionStore = new SequelizeStore({
   db: sequelize,
   tableName: 'sessions',
-  checkExpirationInterval: 15 * 60 * 1000,       // Cada 15 min limpia sesiones expiradas
-  expiration: 7 * 24 * 60 * 60 * 1000            // Expiran a los 7 días
+  checkExpirationInterval: 15 * 60 * 1000,
+  expiration: 7 * 24 * 60 * 60 * 1000
 });
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -148,10 +169,8 @@ app.use(session({
   }
 }));
 
-// Sincroniza la tabla de sesiones en la DB
 sessionStore.sync();
 
-// Middleware para imprimir estado de sesión (para debug)
 app.use((req, res, next) => {
   console.log('Sesión actual:', {
     userId: req.session.userId,
@@ -162,18 +181,22 @@ app.use((req, res, next) => {
 });
 
 // --- RUTAS ---
-
-// Rutas principales (index, usuarios, refugios, mascotas, solicitudes)
 app.use('/', require('./routes/index'));
-app.use('/usuarios', require('./routes/usuarios'));    // Aquí va tu archivo usuarios.js
+app.use('/usuarios', require('./routes/usuarios'));
 app.use('/refugios', require('./routes/refugios'));
 app.use('/mascotas', require('./routes/mascotas'));
 app.use('/solicitudes', require('./routes/solicitudes'));
 
-// --- INICIO DEL SERVIDOR ---
+// --- MANEJO DE ERRORES CORS (opcional, para desarrollo) ---
+app.use((err, req, res, next) => {
+  if (err && err.message && err.message.includes('CORS')) {
+    console.error('Error de CORS:', err.message);
+    return res.status(403).json({ error: err.message });
+  }
+  next(err);
+});
 
+// --- INICIO DEL SERVIDOR ---
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
 });
-
-
