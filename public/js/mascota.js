@@ -101,6 +101,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 */
 
+// Detectar backend según origen actual
+const BACKEND_URL = (window.location.origin === 'https://tikapawdbp-48n3.onrender.com')
+  ? 'https://tikapawdbp-48n3.onrender.com'
+  : 'https://tikapawdbp.onrender.com';
+
 document.addEventListener('DOMContentLoaded', async () => {
     const mensajeExito = document.getElementById('mensaje-exito');
     const mensajeError = document.getElementById('mensaje-error');
@@ -117,7 +122,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     try {
-        const authResponse = await fetch('http://localhost:3000/usuarios/api/auth/check', {
+        // Cambiado localhost por BACKEND_URL
+        const authResponse = await fetch(`${BACKEND_URL}/usuarios/api/auth/check`, {
             method: 'GET',
             credentials: 'include'
         });
@@ -130,7 +136,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        const petResponse = await fetch(`http://localhost:3000/mascotas/${mascotaId}`, {
+        const petResponse = await fetch(`${BACKEND_URL}/mascotas/${mascotaId}`, {
             credentials: 'include'
         });
 
@@ -176,6 +182,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         console.log('Redirigiendo a solicitud.html con mascotaId:', mascotaId);
-        window.location.href = `http://localhost:3000/solicitud.html?mascotaId=${mascotaId}`;
+        window.location.href = `${BACKEND_URL}/solicitud.html?mascotaId=${mascotaId}`;
     });
 });
