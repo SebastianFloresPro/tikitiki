@@ -163,7 +163,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 document.getElementById('edad').textContent = `${petData.mascota.edad || '0'} años`;
                 document.getElementById('genero').textContent = petData.mascota.genero || 'No especificado';
                 document.getElementById('descripcion').textContent = petData.mascota.descripcion || 'Sin descripción';
-                document.getElementById('foto').src = petData.mascota.foto || '/img/cat.jpeg';
+                const fotoMascota = petData.mascota.foto || '/img/cat.jpeg';
+                const urlFoto = fotoMascota.startsWith('http') ? fotoMascota : `${window.location.origin}${fotoMascota}`;
+
+                document.getElementById('foto').src = urlFoto;
             } else {
                 mensajeError.textContent = petData.message || 'Mascota no encontrada.';
                 mensajeError.classList.add('visible');
