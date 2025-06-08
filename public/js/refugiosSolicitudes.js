@@ -1,4 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Definir URL backend según origen de la página
+    const BACKEND_URL = (window.location.origin === 'https://tikapawdbp-48n3.onrender.com')
+      ? 'https://tikapawdbp-48n3.onrender.com'
+      : (window.location.origin === 'http://localhost:3000' 
+          ? 'http://localhost:3000' 
+          : 'https://tikapawdbp.onrender.com');
+
     const resultadosSolicitudes = document.getElementById('resultados-solicitudes');
     const mensajeError = document.getElementById('mensaje-error');
     const urlParams = new URLSearchParams(window.location.search);
@@ -11,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    fetch('http://localhost:3000/usuarios/api/auth/check', { method: 'GET', credentials: 'include' })
+    fetch(`${BACKEND_URL}/usuarios/api/auth/check`, { method: 'GET', credentials: 'include' })
         .then(res => res.json())
         .then(data => {
             if (!data.isValid || data.tipo !== 'refugio' || data.userId != idcentro) {
@@ -27,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
     function cargarSolicitudes() {
-        fetch(`http://localhost:3000/solicitudes/solicitudes?tipo=refugio&mascotaId=${mascotaId}&idcentro=${idcentro}`, {
+        fetch(`${BACKEND_URL}/solicitudes/solicitudes?tipo=refugio&mascotaId=${mascotaId}&idcentro=${idcentro}`, {
             method: 'GET',
             credentials: 'include'
         })
@@ -62,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             const select = button.previousElementSibling;
                             const nuevoEstado = select.value;
 
-                            fetch(`http://localhost:3000/solicitudes/solicitudes/${solicitudId}/estado`, {
+                            fetch(`${BACKEND_URL}/solicitudes/solicitudes/${solicitudId}/estado`, {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({ estado: nuevoEstado }),
