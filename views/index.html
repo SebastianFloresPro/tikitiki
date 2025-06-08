@@ -122,42 +122,43 @@
     <script src="/js/main.js" defer></script>
     
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        cargarMascotas();
-    });
+document.addEventListener('DOMContentLoaded', () => {
+    const pagina = window.location.pathname;
 
-async function cargarMascotas() {
-  try {
-    const response = await fetch('/mascotas-public');
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    if (pagina === '/' || pagina === '/index.html') {
+        fetch('/mascotas')
+            .then(respuesta => respuesta.json())
+            .then(datos => {
+                if (datos.success) {
+                    const contenedorGatos = document.querySelector('.contenedor-gatos');
+                    contenedorGatos.innerHTML = '';
 
-    const data = await response.json();
-    console.log('Mascotas recibidas:', data); // 👈 revisa esto en la consola
-
-    const contenedorGatos = document.getElementById('contenedor-gatos');
-    contenedorGatos.innerHTML = '';
-
-    if (data.success && data.mascotas.length > 0) {
-      data.mascotas.slice(0, 3).forEach(mascota => {
-        const tarjeta = document.createElement('div');
-        tarjeta.className = 'tarjeta-gato';
-        tarjeta.innerHTML = `
-          <img src="${mascota.foto || '/img/cat.jpeg'}" alt="${mascota.nombre}">
-          <h3>${mascota.nombre}</h3>
-          <p>${mascota.edad} años • ${mascota.descripcion || 'Sin descripción'}</p>
-          <a href="/mascota.html?mascotaId=${mascota.idmascota}" class="boton-adoptar">Adóptame</a>
-        `;
-        contenedorGatos.appendChild(tarjeta);
-      });
-    } else {
-      contenedorGatos.innerHTML = '<p>No hay mascotas disponibles.</p>';
+                    if (datos.mascotas.length > 0) {
+                        datos.mascotas.forEach(mascota => {
+                            const tarjeta = document.createElement('div');
+                            tarjeta.className = 'tarjeta-gato';
+                            tarjeta.innerHTML = `
+                                <img src="${mascota.foto || '/img/cat.jpeg'}" alt="${mascota.nombre}">
+                                <h3>${mascota.nombre}</h3>
+                                <p>${mascota.edad} años • ${mascota.descripcion || 'Sin descripción'}</p>
+                                <a href="/mascota.html?mascotaId=${mascota.idmascota}" class="boton-adoptar">Adóptame</a>
+                            `;
+                            contenedorGatos.appendChild(tarjeta);
+                        });
+                    } else {
+                        contenedorGatos.innerHTML = '<p>No hay mascotas disponibles para adopción en este momento.</p>';
+                    }
+                } else {
+                    console.error('Error al cargar mascotas:', datos.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error en la petición:', error);
+                const contenedorGatos = document.querySelector('.contenedor-gatos');
+                contenedorGatos.innerHTML = `<p>Error al cargar mascotas: ${error.message}</p>`;
+            });
     }
-  } catch (error) {
-    console.error('Error al cargar mascotas:', error);
-    document.getElementById('contenedor-gatos').innerHTML = `<p>Error: ${error.message}</p>`;
-  }
-}
-
+});
 </script>
 </body>
 </html>
