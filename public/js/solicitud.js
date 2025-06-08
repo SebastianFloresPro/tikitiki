@@ -1,3 +1,8 @@
+// Definir URL backend según origen de la página
+const BACKEND_URL = (window.location.origin === 'https://tikapawdbp-48n3.onrender.com')
+  ? 'https://tikapawdbp-48n3.onrender.com'
+  : (window.location.origin === 'http://localhost:3000' ? 'http://localhost:3000' : 'https://tikapawdbp.onrender.com');
+
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('solicitud-adopcion-form');
     const selectMascota = document.getElementById('mascota');
@@ -8,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let usuarioId;
     let mascotasData = []; 
 
-    fetch('http://localhost:3000/usuarios/api/auth/check', {
+    fetch(`${BACKEND_URL}/usuarios/api/auth/check`, {
         method: 'GET',
         credentials: 'include'
     })
@@ -28,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = '/usuarios/login';
         });
 
-    fetch('http://localhost:3000/mascotas', { credentials: 'include' })
+    fetch(`${BACKEND_URL}/mascotas`, { credentials: 'include' })
         .then(res => res.json())
         .then(data => {
             if (data.success && data.mascotas.length > 0) {
@@ -79,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function cargarSolicitudes() {
-        fetch('http://localhost:3000/solicitudes/solicitudes', { credentials: 'include' }) 
+        fetch(`${BACKEND_URL}/solicitudes/solicitudes`, { credentials: 'include' }) 
             .then(res => res.json())
             .then(data => {
                 resultadosSolicitudes.innerHTML = '';
@@ -126,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        fetch('http://localhost:3000/mascotas/solicitar-adopcion', {
+        fetch(`${BACKEND_URL}/mascotas/solicitar-adopcion`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ mascotaId, motivo, experiencia }),
